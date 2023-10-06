@@ -29,6 +29,7 @@
   margin-left: auto;
   border: 2px white solid;
   cursor: pointer;
+  border-radius: 2px;
 }
 .profile__add-button:hover {
   opacity: 0.6;
@@ -37,7 +38,7 @@
   font-size: 42px;
   font-weight: 500;
   line-height: 48px;
-  font-family: Inter, Ariel, sans-serif;
+  font-family: Inter, Arial, sans-serif;
   grid-area: title;
   margin: 0;
   padding: 0;
@@ -49,7 +50,7 @@
   font-size: 18px;
   line-height: 22px;
   font-weight: 400;
-  font-family: Inter, Ariel, sans-serif;
+  font-family: Inter, Arial, sans-serif;
   grid-area: description;
   margin: 0;
   text-overflow: ellipsis;
@@ -97,5 +98,8 @@
     margin: 0;
     width: 100%;
     margin-top: 36px;
+  }
+  .profile__image {
+    margin: 0;
   }
 }

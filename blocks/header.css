@@ -5,7 +5,7 @@
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
-  border-bottom: 1px white solid;
+  border-bottom: 1px rgb(84, 84, 84, 0.7) solid;
 }
 .header__logo {
   width: 173px;
