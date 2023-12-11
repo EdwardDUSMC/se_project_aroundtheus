@@ -37,6 +37,9 @@
   background-size: contain;
   cursor: pointer;
 }
+.modal__close:hover {
+  opacity: 60%;
+}
 .modal__heading {
   margin: 0;
   font-size: 24px;
@@ -78,6 +81,9 @@
   font-family: Inter;
   font-weight: 400;
   word-wrap: break-word;
+}
+.modal__button:hover {
+  opacity: 0.8;
 }
 @media screen and (max-width: 480px) {
   .modal__close {
