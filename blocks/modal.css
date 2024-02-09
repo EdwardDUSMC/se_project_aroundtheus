@@ -51,7 +51,7 @@
   display: flex;
   flex-direction: column;
 }
-.modal__input_title {
+.modal__input_name {
   margin-top: 54px;
   border: none;
   border-bottom: 1px rgba(0, 0, 0, 0.2) solid;

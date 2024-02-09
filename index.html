@@ -23,7 +23,7 @@
             alt="Jacques Cousteau picture"
           />
           <div class="profile__info">
-            <h1 class="profile__title">Jacques Cousteau</h1>
+            <h1 class="profile__name">Jacques Cousteau</h1>
             <button
               type="button"
               aria-label="Edit"
@@ -47,6 +47,34 @@
       </footer>
     </div>
 
+    <!-- Add card modal-->
+
+    <div class="modal" id="add-card-modal">
+      <div class="modal__container">
+        <button class="modal__close" id="modal-close-button"></button>
+        <p class="modal__heading">New Place</p>
+        <form class="modal__form">
+          <input
+            type="text"
+            placeholder="Title"
+            id="profile-title-input"
+            name="Title"
+            class="modal__input modal__input_title"
+          />
+          <input
+            type="text"
+            placeholder="Image URL"
+            id="profile-description-input"
+            name="description"
+            class="modal__input modal__input_url"
+          />
+          <button class="modal__button">Save</button>
+        </form>
+      </div>
+    </div>
+
+    <!--profile modal-->
+
     <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
         <button class="modal__close" id="modal-close-button"></button>
@@ -55,9 +83,9 @@
           <input
             type="text"
             placeholder="Title"
-            id="profile-title-input"
+            id="profile-name-input"
             name="title"
-            class="modal__input modal__input_title"
+            class="modal__input modal__input_name"
           />
           <input
             type="text"
@@ -70,6 +98,7 @@
         </form>
       </div>
     </div>
+
     <template id="card-template">
       <li class="card">
         <img src="" alt="" class="card__image" />
