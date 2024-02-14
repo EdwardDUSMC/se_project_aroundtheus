@@ -51,7 +51,7 @@
   display: flex;
   flex-direction: column;
 }
-.modal__input_name {
+.modal__input_box1 {
   margin-top: 54px;
   border: none;
   border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
@@ -61,7 +61,7 @@
   word-wrap: break-word;
   padding-bottom: 13px;
 }
-.modal__input_description {
+.modal__input_box2 {
   margin-top: 30px;
   border: none;
   border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
