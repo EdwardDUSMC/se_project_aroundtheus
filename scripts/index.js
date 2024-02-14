@@ -27,12 +27,10 @@ const initialCards = [
 
 /* Elements */
 
-const modalCloseBtn = document.querySelector("#modal-close-button");
 const profileEditModal = document.querySelector("#edit-modal");
-const profileEditBtn = document.querySelector("#profile-edit-button");
 const profileName = document.querySelector(".profile__name");
-const profileTitle = document.querySelector(".profile__description");
-const profileTitleInput = document.querySelector("#profile-title-input");
+const profileDescription = document.querySelector(".profile__description");
+const profileNameInput = document.querySelector("#profile-name-input");
 const profileDescriptionInput = document.querySelector(
   "#profile-description-input"
 );
@@ -40,11 +38,23 @@ const profileEditFrom = profileEditModal.querySelector(".modal__form");
 const cardListEl = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
+const addNewCardModal = document.querySelector("#add-card-modal");
+
+/* Button Elements*/
+
+const profileModalCloseBtn = profileEditModal.querySelector(".modal__close");
+const profileEditBtn = document.querySelector("#profile-edit-button");
+const addCardBtn = document.querySelector(".profile__add-button");
+const addCardCloseBtn = addNewCardModal.querySelector(".modal__close");
 
 /* Functions */
 
-function closePopup() {
-  profileEditModal.classList.remove("modal_opened");
+function closeModal(modal) {
+  modal.classList.remove("modal_opened");
+}
+
+function openModal(modal) {
+  modal.classList.add("modal_opened");
 }
 
 function getCardElement(cardData) {
@@ -62,22 +72,27 @@ function getCardElement(cardData) {
 
 function handleProfileEditSubmit(e) {
   e.preventDefault();
-  profileName.textContent = profileTitleInput.value;
-  profileTitle.textContent = profileDescriptionInput.value;
-  closePopup();
+  profileName.textContent = profileNameInput.value;
+  profileDescription.textContent = profileDescriptionInput.value;
+  closemodal();
 }
 
 /* Event Listeners */
 
 profileEditBtn.addEventListener("click", () => {
-  profileTitleInput.value = profileName.textContent;
-  profileDescriptionInput.value = profileTitle.textContent;
-  profileEditModal.classList.add("modal_opened");
+  profileNameInput.value = profileName.textContent;
+  profileDescriptionInput.value = profileDescription.textContent;
+  openModal(profileEditModal);
 });
 
-modalCloseBtn.addEventListener("click", closePopup);
+profileModalCloseBtn.addEventListener("click", () =>
+  closeModal(profileEditModal)
+);
 
 profileEditFrom.addEventListener("submit", handleProfileEditSubmit);
+
+addCardBtn.addEventListener("click", () => openModal(addNewCardModal));
+addCardCloseBtn.addEventListener("click", () => closeModal(addNewCardModal));
 
 initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
