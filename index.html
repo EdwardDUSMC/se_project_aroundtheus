@@ -47,39 +47,13 @@
       </footer>
     </div>
 
-    <!-- Add card modal-->
-
-    <div class="modal" id="add-card-modal">
-      <div class="modal__container">
-        <button class="modal__close" id="modal-close-button"></button>
-        <p class="modal__heading">New Place</p>
-        <form class="modal__form">
-          <input
-            type="text"
-            placeholder="Title"
-            id="profile-title-input"
-            name="Title"
-            class="modal__input modal__input_title"
-          />
-          <input
-            type="text"
-            placeholder="Image URL"
-            id="profile-description-input"
-            name="description"
-            class="modal__input modal__input_url"
-          />
-          <button class="modal__button">Save</button>
-        </form>
-      </div>
-    </div>
-
     <!--profile modal-->
 
-    <div class="modal" id="profile-edit-modal">
+    <div class="modal" id="edit-modal">
       <div class="modal__container">
         <button class="modal__close" id="modal-close-button"></button>
         <p class="modal__heading">Edit Profile</p>
-        <form class="modal__form">
+        <form class="modal__form" id="edit-profile-modal">
           <input
             type="text"
             placeholder="Title"
@@ -93,6 +67,32 @@
             id="profile-description-input"
             name="description"
             class="modal__input modal__input_description"
+          />
+          <button class="modal__button">Save</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Add card modal-->
+
+    <div class="modal" id="add-card-modal">
+      <div class="modal__container">
+        <button class="modal__close" id="modal-close-button"></button>
+        <p class="modal__heading">New Place</p>
+        <form class="modal__form" id="add-card-modal">
+          <input
+            type="text"
+            placeholder="Title"
+            id="profile-title-input"
+            name="Title"
+            class="modal__input modal__input_title"
+          />
+          <input
+            type="text"
+            placeholder="Image URL"
+            id="profile-description-input"
+            name="description"
+            class="modal__input modal__input_url"
           />
           <button class="modal__button">Save</button>
         </form>
