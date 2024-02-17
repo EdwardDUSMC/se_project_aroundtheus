@@ -18,11 +18,15 @@
   border-bottom-right-radius: 10px;
 }
 .card__like-button {
-  background: transparent url(../images/Vectorheart.svg) center no-repeat;
+  background: transparent center no-repeat;
+  background-image: url(../images/Vectorheart.svg);
   height: 18px;
   width: 21px;
   border: 0;
   cursor: pointer;
+}
+.card__like-button_active {
+  background: url(../images/Union.svg);
 }
 .card__like-button:hover {
   opacity: 0.5;
