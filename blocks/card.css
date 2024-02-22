@@ -4,6 +4,17 @@
   border-radius: 20px;
   list-style: none;
 }
+.card__trash-button {
+  background: transparent url("../images/trash.svg");
+  position: absolute;
+  width: 18px;
+  height: 19px;
+  border: none;
+  margin: 18px 249px 0;
+}
+.card__trash-button:hover {
+  cursor: pointer;
+}
 .card__description {
   display: flex;
   background-color: white;

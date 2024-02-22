@@ -45,6 +45,17 @@ const profileEditBtn = document.querySelector("#profile-edit-button");
 const addCardBtn = document.querySelector(".profile__add-button");
 const addCardCloseBtn = addNewCardModal.querySelector(".modal__close");
 
+/* preview Elements */
+
+const previewCardModal = document.querySelector("#modal-preview");
+const previewImage = document.querySelector(".modal__preview-image");
+const previewDescription = document.querySelector(
+  ".modal__preview-description"
+);
+const previewCloseButton = previewCardModal.querySelector(
+  ".modal__close_image"
+);
+
 /* Form Data */
 
 const profileNameInput = document.querySelector("#profile-name-input");
@@ -75,9 +86,21 @@ function getCardElement(cardData) {
   const cardImageEl = cardElement.querySelector(".card__image");
   const cardTitleEl = cardElement.querySelector(".card__title");
   const likeButton = cardElement.querySelector(".card__like-button");
+  const cardDeleteButton = cardElement.querySelector(".card__trash-button");
 
   likeButton.addEventListener("click", () => {
     likeButton.classList.toggle("card__like-button_active");
+  });
+
+  cardDeleteButton.addEventListener("click", () => {
+    cardElement.remove();
+  });
+
+  cardImageEl.addEventListener("click", () => {
+    openModal(previewCardModal);
+    previewImage.src = cardData.link;
+    previewDescription.textContent = cardData.title;
+    previewImage.alt = `${cardData.title}`;
   });
 
   cardTitleEl.textContent = cardData.title;
