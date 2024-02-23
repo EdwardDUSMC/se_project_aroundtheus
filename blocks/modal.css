@@ -6,13 +6,18 @@
   left: 0;
   right: 0;
   z-index: 999;
-  display: none;
+  display: flex;
   padding: 0 19px;
   align-items: center;
   justify-content: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibilty 0.5s, opacity 0.5s linear;
 }
 .modal_opened {
   display: flex;
+  visibility: visible;
+  opacity: 1;
 }
 
 .modal__container {
@@ -23,6 +28,7 @@
   border-radius: 10px;
   position: relative;
   width: 358px;
+  transition: visibility 1s;
 }
 .modal__close {
   position: absolute;
@@ -88,7 +94,7 @@
   border-radius: 10px;
   position: relative;
   width: 433px;
-  height: ;
+  height: 540px;
 }
 
 .modal__preview-image {

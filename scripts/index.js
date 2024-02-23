@@ -44,7 +44,6 @@ const profileModalCloseBtn = profileEditModal.querySelector(".modal__close");
 const profileEditBtn = document.querySelector("#profile-edit-button");
 const addCardBtn = document.querySelector(".profile__add-button");
 const addCardCloseBtn = addNewCardModal.querySelector(".modal__close");
-
 /* preview Elements */
 
 const previewCardModal = document.querySelector("#modal-preview");
@@ -137,6 +136,8 @@ profileEditBtn.addEventListener("click", () => {
 profileModalCloseBtn.addEventListener("click", () =>
   closeModal(profileEditModal)
 );
+
+previewCardModal.addEventListener("click", () => closeModal(previewCardModal));
 
 /* Form Listeners */
 
