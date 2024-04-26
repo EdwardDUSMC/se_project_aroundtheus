@@ -60,15 +60,26 @@
             id="profile-name-input"
             name="title"
             class="modal__input modal__input_box1"
+            required
+            minlength="2"
+            maxlength="40"
           />
+          <span class="modal__error" id="profile-name-input-error"></span>
           <input
             type="text"
             placeholder="description"
             id="profile-description-input"
             name="description"
             class="modal__input modal__input_box2"
+            required
+            minlength="2"
+            maxlength="200"
           />
-          <button class="modal__button">Save</button>
+          <span
+            class="modal__error"
+            id="profile-description-input-error"
+          ></span>
+          <button class="modal__button popup__button_disabled">Save</button>
         </form>
       </div>
     </div>
@@ -86,15 +97,21 @@
             id="card-title-input"
             name="Title"
             class="modal__input modal__input_box1"
+            required
+            minlength="1"
+            maxlength="30"
           />
+          <span class="modal__error" id="card-title-input-error"></span>
           <input
-            type="text"
+            type="url"
             placeholder="Image URL"
             id="card-url-input"
             name="URL"
             class="modal__input modal__input_box2"
+            required
           />
-          <button class="modal__button">Save</button>
+          <span class="modal__error" id="card-url-input-error"></span>
+          <button class="modal__button popup__button_disabled">Save</button>
         </form>
       </div>
     </div>
@@ -129,5 +146,6 @@
       </li>
     </template>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validation.js"></script>
   </body>
 </html>

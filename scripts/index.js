@@ -151,3 +151,4 @@ addCardBtn.addEventListener("click", () => openModal(addNewCardModal));
 addCardCloseBtn.addEventListener("click", () => closeModal(addNewCardModal));
 
 initialCards.forEach((cardData) => renderCard(cardData, cardListEl));
+
