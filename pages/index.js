@@ -1,3 +1,6 @@
+import FormValidator from "../components/FormValidator.js";
+import Card from "../components/Card.js";
+
 const initialCards = [
   {
     title: "Yosemite Valley",
@@ -25,7 +28,15 @@ const initialCards = [
   },
 ];
 
-/* Elements */
+const cardData = {
+  name: "Yosemite Valley",
+  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+};
+
+const card = new Card(cardData, "#card-template");
+card.getView();
+
+/* Wrappers */
 
 const profileEditModal = document.querySelector("#edit-modal");
 const addNewCardModal = document.querySelector("#add-card-modal");
@@ -63,6 +74,26 @@ const profileDescriptionInput = document.querySelector(
 );
 const cardTitleInput = document.querySelector("#card-title-input");
 const cardUrlInput = document.querySelector("#card-url-input");
+
+/* Validation */
+
+const config = {
+  formSelector: ".modal__form",
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
+
+const editFormElement = profileEditModal.querySelector(".modal__form");
+const addFormElement = addNewCardModal.querySelector(".modal__form");
+
+const editFormValidator = new FormValidator(config, editFormElement);
+editFormValidator.enableValidation();
+
+const addFormValidator = new FormValidator(config, addFormElement);
+addFormValidator.enableValidation();
 
 /* Functions */
 
