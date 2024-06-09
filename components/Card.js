@@ -1,5 +1,5 @@
 export default class Card {
-  constructor({ cardData, cardSelector, handlePreviewImage }) {
+  constructor({ title, link }, cardData, cardSelector, handlePreviewImage) {
     this._title = cardData.title;
     this._link = cardData.link;
     this._cardSelector = cardSelector;
@@ -16,12 +16,11 @@ export default class Card {
     this._deleteButton.addEventListener("click", () => {
       this._handleDeleteCard();
     });
-    //".card__image"
-    this._cardImageEl
-      .querySelector(".card__image")
-      .addEventListener("click", () => {
-        this._handlePreviewImage({ title: this._title, link: this._link });
-      });
+
+    this._cardImageEl = this._cardElement.querySelector(".card__image");
+    this._cardImageEl.addEventListener("click", () => {
+      this._handlePreviewImage({ title: this._title, link: this._link });
+    });
   }
 
   _handleLikeIcon() {
@@ -35,7 +34,7 @@ export default class Card {
 
   _getTemplate() {
     return document
-      .querySelector(this._cardSelector)
+      .querySelector("#card-template")
       .content.querySelector(".card")
       .cloneNode(true);
   }
