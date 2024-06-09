@@ -104,11 +104,11 @@ function openModal(modal) {
 
 function renderCard(cardData) {
   const cardElement = createCard(cardData);
-  cardsWrap.prepend(cardElement);
+  cardListEl.prepend(cardElement);
 }
 
 function createCard(cardData) {
-  const cardElement = new Card(cardData, cardSelector, handlePreviewImage);
+  const cardElement = new Card(cardData, "#card-template", handlePreviewImage);
   return cardElement.getView();
 }
 

@@ -32,15 +32,11 @@ export default class Card {
     this._cardElement = null;
   }
 
-  _getTemplate() {
-    return document
+  getView() {
+    this._cardElement = document
       .querySelector("#card-template")
       .content.querySelector(".card")
       .cloneNode(true);
-  }
-
-  getView() {
-    this._cardElement = this._getTemplate();
     this._cardElement.querySelector(".card__image").src = this._link;
     this._cardElement.querySelector(".card__title").textContent = this._title;
     this._cardElement.querySelector(".card__image").alt = this._title;
