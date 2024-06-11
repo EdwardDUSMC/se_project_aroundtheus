@@ -5,33 +5,33 @@ const cardSelector = document.querySelector("#card-template");
 
 const initialCards = [
   {
-    title: "Yosemite Valley",
+    name: "Yosemite Valley",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
   },
   {
-    title: "Lake Louise",
+    name: "Lake Louise",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
   },
   {
-    title: "Bald Mountains",
+    name: "Bald Mountains",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
   },
   {
-    title: "Latemar",
+    name: "Latemar",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
   },
   {
-    title: "Vanoise National Park",
+    name: "Vanoise National Park",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
   },
   {
-    title: "Lago di Braies",
+    name: "Lago di Braies",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
   },
 ];
 
 const cardData = {
-  title: "Yosemite Valley",
+  name: "Yosemite Valley",
   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
 };
 
@@ -83,7 +83,7 @@ const profileNameInput = document.querySelector("#profile-name-input");
 const profileDescriptionInput = document.querySelector(
   "#profile-description-input"
 );
-const cardTitleInput = document.querySelector("#card-title-input");
+const cardNameInput = document.querySelector("#card-name-input");
 const cardUrlInput = document.querySelector("#card-url-input");
 
 /**************
@@ -116,7 +116,7 @@ function createCard(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
 
   const cardImageEl = cardElement.querySelector(".card__image");
-  const cardTitleEl = cardElement.querySelector(".card__title");
+  const cardNameEl = cardElement.querySelector(".card__name");
   const likeButton = cardElement.querySelector(".card__like-button");
   const cardDeleteButton = cardElement.querySelector(".card__trash-button");
 
@@ -131,13 +131,13 @@ function createCard(cardData) {
   cardImageEl.addEventListener("click", () => {
     openModal(previewCardModal);
     previewImage.src = cardData.link;
-    previewDescription.textContent = cardData.title;
-    previewImage.alt = `${cardData.title}`;
+    previewDescription.textContent = cardData.name;
+    previewImage.alt = `${cardData.name}`;
   });
 
-  cardTitleEl.textContent = cardData.title;
+  cardNameEl.textContent = cardData.name;
   cardImageEl.src = cardData.link;
-  cardImageEl.alt = cardData.title;
+  cardImageEl.alt = cardData.name;
   return cardElement;
 }
 
@@ -154,9 +154,9 @@ function handleProfileEditSubmit(e) {
 
 function handleAddCardSubmit(e) {
   e.preventDefault();
-  const title = cardTitleInput.value;
+  const name = cardnameInput.value;
   const link = cardUrlInput.value;
-  renderCard({ title, link }, cardListEl);
+  renderCard({ name, link }, cardListEl);
   closeModal(addNewCardModal);
   document.forms["add-card-form"].reset();
 }
@@ -210,8 +210,8 @@ addCardCloseBtn.addEventListener("click", () => closeModal(addNewCardModal));
 
 function handlePreviewImage(cardData) {
   previewImage.src = cardData.link;
-  previewImage.alt = cardData.title;
-  previewDescription.textContent = cardData.title;
+  previewImage.alt = cardData.name;
+  previewDescription.textContent = cardData.name;
   openModal(previewCardModal);
 }
 

@@ -34,7 +34,7 @@
 .profile__add-button:hover {
   opacity: 0.6;
 }
-.profile__title {
+.profile__name {
   font-size: 42px;
   font-weight: 500;
   line-height: 48px;
@@ -80,7 +80,7 @@
     margin-top: 26px;
     grid-gap: 14px 10px;
   }
-  .profile__title {
+  .profile__name {
     font-size: 22px;
     line-height: 26px;
   }
