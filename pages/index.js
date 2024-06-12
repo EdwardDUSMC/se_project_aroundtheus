@@ -154,7 +154,7 @@ function handleProfileEditSubmit(e) {
 
 function handleAddCardSubmit(e) {
   e.preventDefault();
-  const name = cardnameInput.value;
+  const name = cardNameInput.value;
   const link = cardUrlInput.value;
   renderCard({ name, link }, cardListEl);
   closeModal(addNewCardModal);
