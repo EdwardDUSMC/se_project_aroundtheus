@@ -52,8 +52,7 @@ export default class FormValidator {
     if (!isValidInputResult) {
       this.disableSubmitButton();
     } else {
-      this._submitButton.classList.remove(this._inactiveButtonClass);
-      this._submitButton.disabled = false;
+      this._enableButton();
     }
   }
 
@@ -61,7 +60,6 @@ export default class FormValidator {
     this._inputEls.forEach((inputEl) => {
       this._hideInputError(inputEl);
     });
-    this._enableButton();
   }
 
   _setEventListeners() {

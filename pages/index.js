@@ -46,8 +46,8 @@ const profileEditModal = document.querySelector("#edit-modal");
 const addNewCardModal = document.querySelector("#add-card-modal");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
-const profileEditForm = profileEditModal.querySelector(".modal__form");
-const addCardForm = addNewCardModal.querySelector("#add-card-form");
+const profileEditForm = document.forms["edit-profile-modal"];
+const addCardForm = document.forms["add-card-form"];
 
 const cardListEl = document.querySelector(".cards__list");
 /*const cardTemplate =
@@ -57,11 +57,10 @@ const cardListEl = document.querySelector(".cards__list");
  * BUTTON ELEMENTS *
  *******************/
 
-const profileModalCloseBtn = profileEditModal.querySelector(".modal__close");
 const profileEditBtn = document.querySelector("#profile-edit-button");
 const addCardBtn = document.querySelector(".profile__add-button");
 const addCardCloseBtn = addNewCardModal.querySelector(".modal__close");
-
+const closeButtons = document.querySelectorAll(".modal__close");
 /********************
  * PREVIEW ELEMENTS *
  ********************/
@@ -70,9 +69,6 @@ const previewCardModal = document.querySelector("#modal-preview");
 const previewImage = document.querySelector(".modal__preview-image");
 const previewDescription = document.querySelector(
   ".modal__preview-description"
-);
-const previewCloseButton = previewCardModal.querySelector(
-  ".modal__close_image"
 );
 
 /*************
@@ -112,35 +108,6 @@ function createCard(cardData) {
   return cardElement.getView();
 }
 
-/*function getCardElement(cardData) {
-  const cardElement = cardTemplate.cloneNode(true);
-
-  const cardImageEl = cardElement.querySelector(".card__image");
-  const cardNameEl = cardElement.querySelector(".card__name");
-  const likeButton = cardElement.querySelector(".card__like-button");
-  const cardDeleteButton = cardElement.querySelector(".card__trash-button");
-
-  likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("card__like-button_active");
-  });
-
-  cardDeleteButton.addEventListener("click", () => {
-    cardElement.remove();
-  });
-
-  cardImageEl.addEventListener("click", () => {
-    openModal(previewCardModal);
-    previewImage.src = cardData.link;
-    previewDescription.textContent = cardData.name;
-    previewImage.alt = `${cardData.name}`;
-  });
-
-  cardNameEl.textContent = cardData.name;
-  cardImageEl.src = cardData.link;
-  cardImageEl.alt = cardData.name;
-  return cardElement;
-}
-
 /******************
  * EVENT HANDLERS *
  ******************/
@@ -158,7 +125,7 @@ function handleAddCardSubmit(e) {
   const link = cardUrlInput.value;
   renderCard({ name, link }, cardListEl);
   closeModal(addNewCardModal);
-  document.forms["add-card-form"].reset();
+  addCardForm.reset();
 }
 
 function closeWithEscape(e) {
@@ -186,13 +153,10 @@ profileEditBtn.addEventListener("click", () => {
   openModal(profileEditModal);
 });
 
-profileModalCloseBtn.addEventListener("click", () =>
-  closeModal(profileEditModal)
-);
-
-previewCloseButton.addEventListener("click", () =>
-  closeModal(previewCardModal)
-);
+closeButtons.forEach((button) => {
+  const modal = button.closest(".modal");
+  button.addEventListener("click", () => closeModal(modal));
+});
 
 /******************
  * FORM LISTENERS *
@@ -215,10 +179,6 @@ function handlePreviewImage(cardData) {
   openModal(previewCardModal);
 }
 
-previewCloseButton.addEventListener("click", () => {
-  closeModal(previewCardModal);
-});
-
 /***************
  * VALIDATION; *
  ***************/
@@ -232,13 +192,10 @@ const config = {
   errorClass: "modal__error_visible",
 };
 
-const editFormElement = profileEditModal.querySelector(".modal__form");
-const addFormElement = addNewCardModal.querySelector(".modal__form");
-
-const editFormValidator = new FormValidator(config, editFormElement);
+const editFormValidator = new FormValidator(config, profileEditForm);
 editFormValidator.enableValidation();
 
-const addFormValidator = new FormValidator(config, addFormElement);
+const addFormValidator = new FormValidator(config, addCardForm);
 addFormValidator.enableValidation();
 
 initialCards.forEach((cardData) => renderCard(cardData));
