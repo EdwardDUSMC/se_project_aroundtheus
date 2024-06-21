@@ -1,8 +1,6 @@
 import FormValidator from "../components/FormValidator.js";
 import Card from "../components/Card.js";
 
-const cardSelector = document.querySelector("#card-template");
-
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -30,11 +28,6 @@ const initialCards = [
   },
 ];
 
-const cardData = {
-  name: "Yosemite Valley",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-};
-
 /*************
  * WRAPPERS; *
  *************/
@@ -45,10 +38,7 @@ const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 const profileEditForm = document.forms["edit-profile-modal"];
 const addCardForm = document.forms["add-card-form"];
-
 const cardListEl = document.querySelector(".cards__list");
-/*const cardTemplate =
-  document.querySelector("#card-template").content.firstElementChild;
 
 /*******************
  * BUTTON ELEMENTS *
@@ -56,7 +46,6 @@ const cardListEl = document.querySelector(".cards__list");
 
 const profileEditBtn = document.querySelector("#profile-edit-button");
 const addCardBtn = document.querySelector(".profile__add-button");
-const addCardCloseBtn = addNewCardModal.querySelector(".modal__close");
 const closeButtons = document.querySelectorAll(".modal__close");
 /********************
  * PREVIEW ELEMENTS *
@@ -123,7 +112,7 @@ function handleAddCardSubmit(e) {
   renderCard({ name, link }, cardListEl);
   closeModal(addNewCardModal);
   addCardForm.reset();
-  addFormValidator.toggleButtonState();
+  addFormValidator.disableSubmitButton();
 }
 
 function closeWithEscape(e) {
@@ -164,7 +153,6 @@ profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 addCardForm.addEventListener("submit", handleAddCardSubmit);
 
 addCardBtn.addEventListener("click", () => openModal(addNewCardModal));
-addCardCloseBtn.addEventListener("click", () => closeModal(addNewCardModal));
 
 /******************************
  * PREVIEW IMAGE CLOSE BUTTON *
