@@ -1,5 +1,6 @@
 import FormValidator from "../components/FormValidator.js";
 import Card from "../components/Card.js";
+import Section from "../components/Section.js";
 
 const initialCards = [
   {
@@ -86,7 +87,10 @@ function openModal(modal) {
 
 function renderCard(cardData) {
   const cardElement = createCard(cardData);
-  cardListEl.prepend(cardElement);
+  // new code
+  section.addItem(cardElement);
+  // old code
+  // cardListEl.prepend(cardElement);
 }
 
 function createCard(cardData) {
@@ -109,6 +113,7 @@ function handleAddCardSubmit(e) {
   e.preventDefault();
   const name = cardNameInput.value;
   const link = cardUrlInput.value;
+  console.log(12345);
   renderCard({ name, link }, cardListEl);
   closeModal(addNewCardModal);
   addCardForm.reset();
@@ -184,4 +189,14 @@ editFormValidator.enableValidation();
 const addFormValidator = new FormValidator(config, addCardForm);
 addFormValidator.enableValidation();
 
-initialCards.forEach((cardData) => renderCard(cardData));
+// implementing class logic
+// new code
+const section = new Section(
+  { items: initialCards, renderer: renderCard },
+  ".cards__list"
+);
+
+section.renderItems();
+
+// old code
+// initialCards.forEach((cardData) => renderCard(cardData));
