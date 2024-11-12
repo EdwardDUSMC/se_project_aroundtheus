@@ -51,7 +51,7 @@ popupWithImage.setEventListeners();
 
 function renderCard(item, method = "addItem") {
     const cardElement = getCardElement(item);
-    section.addItem(cardElement);
+    section[method](cardElement);
 }
 
 function getCardElement(cardData) {
@@ -71,6 +71,7 @@ function handleProfileEditSubmit(inputValue) {
         description: inputValue.description,
     });
     popupWithEditProfileForm.close();
+    editFormValidator.disableSubmitButton();
 }
 
 function handleAddCardFormSubmit(inputValue) {
@@ -81,6 +82,8 @@ function handleAddCardFormSubmit(inputValue) {
     renderCard(cardData);
     popupWithAddCardForm.close();
     addCardForm.reset();
+    addFormValidator.disableSubmitButton();
+
 }
 
 addCardButton.addEventListener("click", () => {
