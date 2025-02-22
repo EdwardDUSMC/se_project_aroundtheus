@@ -5,8 +5,20 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
-import { initialCards, profileEditButton, addCardButton, profileEditModal, addCardModal, profileTitleInput, profileDescriptionInput, profileEditForm, addCardForm, cardSelector} from "../utils/Constants.js";
+import {
+  initialCards,
+  profileEditButton,
+  addCardButton,
+  profileEditModal,
+  addCardModal,
+  profileTitleInput,
+  profileDescriptionInput,
+  profileEditForm,
+  addCardForm,
+  cardSelector,
+} from "../utils/Constants.js";
 import { config } from "../utils/Constants.js";
+import Api from "../components/Api.js";
 
 console.log(initialCards);
 
@@ -15,17 +27,19 @@ const popupWithEditProfileForm = new PopupWithForm(
   {
     popupSelector: "#profile-edit-modal",
   },
-  handleProfileEditSubmit,
+  handleProfileEditSubmit
 );
 
 const popupWithAddCardForm = new PopupWithForm(
   {
     popupSelector: "#add-card-modal",
   },
-  handleAddCardFormSubmit,
+  handleAddCardFormSubmit
 );
 
-const popupWithImage = new PopupWithImage({popupSelector: "#preview-image-modal",});
+const popupWithImage = new PopupWithImage({
+  popupSelector: "#preview-image-modal",
+});
 
 const section = new Section(
   {
@@ -44,14 +58,11 @@ popupWithEditProfileForm.setEventListeners();
 popupWithAddCardForm.setEventListeners();
 popupWithImage.setEventListeners();
 
-
-
-
 /*Function*/
 
 function renderCard(item, method = "addItem") {
-    const cardElement = getCardElement(item);
-    section[method](cardElement);
+  const cardElement = getCardElement(item);
+  section[method](cardElement);
 }
 
 function getCardElement(cardData) {
@@ -60,43 +71,44 @@ function getCardElement(cardData) {
 }
 
 function handleImageClick(data) {
-    popupWithImage.open({ name: data.name, link: data.link });
+  popupWithImage.open({ name: data.name, link: data.link });
 }
 
 /*Event Handler*/
 
 function handleProfileEditSubmit(inputValue) {
-    userInfo.setUserInfo({
-        name: inputValue.title,
-        description: inputValue.description,
-    });
-    popupWithEditProfileForm.close();
-    editFormValidator.disableSubmitButton();
+  userInfo.setUserInfo({
+    name: inputValue.title,
+    description: inputValue.description,
+  });
+  popupWithEditProfileForm.close();
+  editFormValidator.disableSubmitButton();
 }
 
 function handleAddCardFormSubmit(inputValue) {
-    const cardData = {
-        name: inputValue.title,
-        link: inputValue.url,
-    };
-    renderCard(cardData);
-    popupWithAddCardForm.close();
-    addCardForm.reset();
-    addFormValidator.disableSubmitButton();
-
+  const cardData = {
+    name: inputValue.title,
+    link: inputValue.url,
+  };
+  renderCard(cardData);
+  popupWithAddCardForm.close();
+  addCardForm.reset();
+  addFormValidator.disableSubmitButton();
 }
 
 addCardButton.addEventListener("click", () => {
-    popupWithAddCardForm.open();
+  popupWithAddCardForm.open();
 });
 
 profileEditButton.addEventListener("click", () => {
-    const currentUserInfo = userInfo.getUserInfo();
-    profileTitleInput.value = currentUserInfo.name
-    profileDescriptionInput.value = currentUserInfo.description
-    popupWithEditProfileForm.open();
+  const currentUserInfo = userInfo.getUserInfo();
+  profileTitleInput.value = currentUserInfo.name;
+  profileDescriptionInput.value = currentUserInfo.description;
+  popupWithEditProfileForm.open();
 });
 
+Api.getUserInfo;
+Api.getCardElement;
 
 initialCards.forEach((cardData) => renderCard(cardData));
 

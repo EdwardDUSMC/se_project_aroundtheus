@@ -1,9 +1,25 @@
 //Autherization code: 196bd4a5-0b68-4944-a5da-dae91687bd99
-class Api {
+export default class Api {
   constructor(options) {
     // constructor body
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
+  }
+
+  getUserInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   getInitialCards() {
@@ -17,12 +33,26 @@ class Api {
         return Promise.reject(`Error: ${res.status}`);
       })
       .catch((err) => {
-        console.log(err);
-        // some code that opens a popup and says sorry try again
+        console.error(err);
       });
   }
 
   // other methods for working with the API
+  postNewCard() {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: "POST",
+      headers: this._headers,
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
 }
 
 const api = new Api({
