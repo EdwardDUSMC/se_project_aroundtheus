@@ -20,8 +20,6 @@ import {
 import { config } from "../utils/Constants.js";
 import Api from "../components/Api.js";
 
-console.log(initialCards);
-
 // Linked classes
 const popupWithEditProfileForm = new PopupWithForm(
   {
@@ -90,7 +88,10 @@ function handleAddCardFormSubmit(inputValue) {
     name: inputValue.title,
     link: inputValue.url,
   };
-  renderCard(cardData);
+  api.addNewCard(cardData).then((newCard) => {
+    renderCard(newCard);
+  });
+  //renderCard(cardData);
   popupWithAddCardForm.close();
   addCardForm.reset();
   addFormValidator.disableSubmitButton();
@@ -107,11 +108,22 @@ profileEditButton.addEventListener("click", () => {
   popupWithEditProfileForm.open();
 });
 
-Api.getUserInfo;
-Api.getCardElement;
+//api
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "196bd4a5-0b68-4944-a5da-dae91687bd99",
+    "Content-Type": "application/json",
+  },
+});
 
+api.getUserInfo();
+api.getCardData();
+
+//card render
 initialCards.forEach((cardData) => renderCard(cardData));
 
+//validator
 const editFormValidator = new FormValidator(config, profileEditForm);
 const addFormValidator = new FormValidator(config, addCardForm);
 editFormValidator.enableValidation();

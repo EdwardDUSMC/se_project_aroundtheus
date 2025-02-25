@@ -22,11 +22,12 @@ export default class Api {
       });
   }
 
-  getInitialCards() {
+  getCardData() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
     })
       .then((res) => {
+        console.log(res);
         if (res.ok) {
           return res.json();
         }
@@ -38,10 +39,12 @@ export default class Api {
   }
 
   // other methods for working with the API
-  postNewCard() {
+
+  addNewCard(newCard) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
+      body: JSON.stringify(newCard),
     })
       .then((res) => {
         if (res.ok) {
@@ -54,11 +57,3 @@ export default class Api {
       });
   }
 }
-
-const api = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: "196bd4a5-0b68-4944-a5da-dae91687bd99",
-    "Content-Type": "application/json",
-  },
-});
