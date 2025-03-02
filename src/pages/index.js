@@ -1,23 +1,21 @@
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import "../pages/index.css";
+import Popup from "../components/Popup.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import {
-  initialCards,
   profileEditButton,
   addCardButton,
-  profileEditModal,
-  addCardModal,
   profileTitleInput,
   profileDescriptionInput,
   profileEditForm,
   addCardForm,
   cardSelector,
-} from "../utils/Constants.js";
-import { config } from "../utils/Constants.js";
+} from "../utils/constants.js";
+import { config } from "../utils/constants.js";
 import Api from "../components/Api.js";
 
 // Linked classes
@@ -35,17 +33,16 @@ const popupWithAddCardForm = new PopupWithForm(
   handleAddCardFormSubmit
 );
 
+const popupWithDeleteButton = new Popup(
+  {
+    popupSelector: "#delete-card-modal",
+  },
+  handleDeleteCardPopup
+);
+
 const popupWithImage = new PopupWithImage({
   popupSelector: "#preview-image-modal",
 });
-
-const section = new Section(
-  {
-    items: initialCards,
-    renderer: renderCard,
-  },
-  ".cards__list"
-);
 
 const userInfo = new UserInfo({
   nameElement: ".profile__title",
@@ -55,6 +52,7 @@ const userInfo = new UserInfo({
 popupWithEditProfileForm.setEventListeners();
 popupWithAddCardForm.setEventListeners();
 popupWithImage.setEventListeners();
+popupWithDeleteButton.setEventListeners();
 
 /*Function*/
 
@@ -64,7 +62,12 @@ function renderCard(item, method = "addItem") {
 }
 
 function getCardElement(cardData) {
-  const card = new Card(cardData, cardSelector, handleImageClick);
+  const card = new Card(
+    cardData,
+    popupWithDeleteButton,
+    cardSelector,
+    handleImageClick
+  );
   return card.getView();
 }
 
@@ -91,10 +94,17 @@ function handleAddCardFormSubmit(inputValue) {
   api.addNewCard(cardData).then((newCard) => {
     renderCard(newCard);
   });
-  //renderCard(cardData);
   popupWithAddCardForm.close();
   addCardForm.reset();
   addFormValidator.disableSubmitButton();
+}
+
+function handleDeleteCardPopup(inputValue) {
+  const cardData = {
+    _id: inputValue.id,
+  };
+
+  popupWithDeleteButton.close();
 }
 
 addCardButton.addEventListener("click", () => {
@@ -118,10 +128,24 @@ const api = new Api({
 });
 
 api.getUserInfo();
-api.getCardData();
 
-//card render
-initialCards.forEach((cardData) => renderCard(cardData));
+//card renderer api
+let cardArray = [];
+
+let data = api.getCardData();
+data.then((data) => {
+  cardArray = data;
+  console.log(cardArray);
+  cardArray.forEach((cardData) => renderCard(cardData));
+});
+
+const section = new Section(
+  {
+    items: cardArray,
+    renderer: renderCard,
+  },
+  ".cards__list"
+);
 
 //validator
 const editFormValidator = new FormValidator(config, profileEditForm);

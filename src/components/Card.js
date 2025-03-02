@@ -1,8 +1,14 @@
 export default class Card {
-  constructor({ name, link }, cardSelector, handleImageClick) {
+  constructor(
+    { name, link },
+    popupWithDeleteButton,
+    cardSelector,
+    handleImageClick
+  ) {
     this._name = name;
     this._link = link;
     this._cardSelector = cardSelector;
+    this._popupWithDeleteButton = popupWithDeleteButton;
     this._handleImageClick = handleImageClick;
   }
 
@@ -25,7 +31,8 @@ export default class Card {
   }
 
   _handleDeleteCard() {
-    this._cardElement.remove();
+    //this._cardElement.remove();
+    this._popupWithDeleteButton.open();
   }
 
   _handleLikeButton() {

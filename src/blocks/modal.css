@@ -13,9 +13,9 @@
 }
 
 .modal_opened {
-visibility: visible ;
-opacity: 1;
-transition: opacity 0.3s ease, visibiltiy 0s linear;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease, visibiltiy 0s linear;
 }
 
 .modal__container {
@@ -28,32 +28,42 @@ transition: opacity 0.3s ease, visibiltiy 0s linear;
   position: relative;
   box-sizing: border-box;
 }
+.modal__delete-container {
+  background-color: #fff;
+  margin: auto;
+  width: 430px;
+  height: 181px;
+  padding: 36px;
+  border-radius: 10px;
+  position: relative;
+  box-sizing: border-box;
+}
 
 .modal__preview-container {
-background: none;
-padding: 0;
-height: 500px;
-margin: auto;
-display: flex;
-border: none;
-position: relative;
+  background: none;
+  padding: 0;
+  height: 500px;
+  margin: auto;
+  display: flex;
+  border: none;
+  position: relative;
 }
 
 .modal__image {
-max-width: 100%;
-max-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .modal__title {
-position: absolute;
-left: 0;
-margin: 0;
-color: #fff;
-font-family: "Inter", Arial, sans-serif;
-font-weight: 400;
-font-size: 12px;
-line-height: 14px;
-top: calc(100% + 10px);
+  position: absolute;
+  left: 0;
+  margin: 0;
+  color: #fff;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  top: calc(100% + 10px);
 }
 
 .modal__heading {
@@ -81,7 +91,7 @@ top: calc(100% + 10px);
 }
 
 .modal__close:hover {
-opacity: 0.6;
+  opacity: 0.6;
 }
 
 .modal__button {
@@ -98,12 +108,12 @@ opacity: 0.6;
 }
 
 .modal__button_disabled {
-background-color: transparent;
-color: rgba(0, 0, 0, 0.2);
+  background-color: transparent;
+  color: rgba(0, 0, 0, 0.2);
 }
 
 .modal__button:hover {
-opacity: 0.6s;
+  opacity: 0.6s;
 }
 
 .modal__input {
@@ -122,38 +132,38 @@ opacity: 0.6s;
 }
 
 .modal__form {
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal__error {
-visibility: hidden;
-display: block;
-font-family: "Inter", Arial, sans-serif;
-font-weight: 400;
-font-size: 12px;
-line-height: 15px;
-color: #ff0000;
-position: absolute;
-transition: opacity 0.3s;
+  visibility: hidden;
+  display: block;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ff0000;
+  position: absolute;
+  transition: opacity 0.3s;
 }
 
 .modal__error:first-of-type {
-top: 151px;
-max-width: 358px;
+  top: 151px;
+  max-width: 358px;
 }
 
 .modal__error:last-of-type {
-top: 210px;
-max-width: 358px;
+  top: 210px;
+  max-width: 358px;
 }
 
 .modal__error_visible {
-visibility: visible;
+  visibility: visible;
 }
 
 .modal__input_type_error {
-border-bottom: 1px solid #f00;
+  border-bottom: 1px solid #f00;
 }
 
 @media screen and (max-width: 480px) {

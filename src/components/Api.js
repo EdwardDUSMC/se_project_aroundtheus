@@ -6,12 +6,13 @@ export default class Api {
     this._headers = options.headers;
   }
 
+  //user api
+
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
     })
       .then((res) => {
-        console.log(res);
         if (res.ok) {
           return res.json();
         }
@@ -21,13 +22,14 @@ export default class Api {
         console.error(err);
       });
   }
+
+  //card api
 
   getCardData() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
     })
       .then((res) => {
-        console.log(res);
         if (res.ok) {
           return res.json();
         }
@@ -38,13 +40,26 @@ export default class Api {
       });
   }
 
-  // other methods for working with the API
-
   addNewCard(newCard) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify(newCard),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+  deleteCardData() {
+    return fetch(`${this._baseUrl}/cards/cardId`, {
+      method: "DELETE",
+      headers: this._headers,
     })
       .then((res) => {
         if (res.ok) {
