@@ -134,18 +134,31 @@
     <div class="modal" id="delete-card-modal">
       <div class="modal__delete-container">
         <button class="modal__close" id="modal-close-button"></button>
-        <h2 class="modal__heading">Are you sure?</h2>
-        <button class="modal__button" id="delete-card-button">Yes</button>
+        <h2 class="modal__heading modal__delete-heading">Are you sure?</h2>
+
+        <form class="modal__form">
+          <button
+            class="modal__button modal__delete-button"
+            id="delete-card-button"
+            type="submit"
+          >
+            Yes
+          </button>
+        </form>
       </div>
     </div>
 
     <template id="card-template">
-      <li class="card">
-        <img src="" alt="" class="card__image" />
+      <li class="card" id="card">
+        <img src="" alt="" id="" class="card__image" />
         <div class="card__description">
           <h2 class="card__title"></h2>
           <button class="card__like-button" type="button"></button>
-          <button class="card__delete-button" type="button"></button>
+          <button
+            class="card__delete-button"
+            id="card-delete-button"
+            type="button"
+          ></button>
         </div>
       </li>
     </template>

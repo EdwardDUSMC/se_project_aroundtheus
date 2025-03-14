@@ -76,6 +76,10 @@
   margin-bottom: 54px;
 }
 
+.modal__delete-heading {
+  margin-bottom: 36px;
+}
+
 .modal__close {
   background-image: url(../images/Close\ Icon.svg);
   border: none;
@@ -105,6 +109,9 @@
   font-size: 18px;
   line-height: 21.78px;
   cursor: pointer;
+}
+.modal__delete-button {
+  width: 100%;
 }
 
 .modal__button_disabled {

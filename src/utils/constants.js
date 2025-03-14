@@ -36,6 +36,7 @@ export const config = {
 
 export const profileEditButton = document.querySelector("#profile-edit-button");
 export const addCardButton = document.querySelector("#add-card-button");
+export const deleteCardButton = document.querySelector("#card-delete-button");
 export const profileEditModal = document.querySelector("#profile-edit-modal");
 export const addCardModal = document.querySelector("#add-card-modal");
 export const profileTitleInput = document.querySelector("#profile-title-input");

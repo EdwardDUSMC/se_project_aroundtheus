@@ -1,14 +1,15 @@
 export default class Card {
   constructor(
-    { name, link },
-    popupWithDeleteButton,
+    { name, link, _id },
     cardSelector,
+    handleDeleteClick,
     handleImageClick
   ) {
     this._name = name;
     this._link = link;
+    this._id = _id;
     this._cardSelector = cardSelector;
-    this._popupWithDeleteButton = popupWithDeleteButton;
+    this._handleDeleteClick = handleDeleteClick;
     this._handleImageClick = handleImageClick;
   }
 
@@ -21,7 +22,7 @@ export default class Card {
     this._cardElement
       .querySelector(".card__delete-button")
       .addEventListener("click", () => {
-        this._handleDeleteCard();
+        this._handleDeleteClick(this._id);
       });
     this._cardElement
       .querySelector(".card__image")
@@ -30,9 +31,8 @@ export default class Card {
       });
   }
 
-  _handleDeleteCard() {
-    //this._cardElement.remove();
-    this._popupWithDeleteButton.open();
+  handleDeleteCard() {
+    this._cardElement.remove(this);
   }
 
   _handleLikeButton() {

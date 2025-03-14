@@ -56,16 +56,14 @@ export default class Api {
         console.error(err);
       });
   }
-  deleteCardData() {
-    return fetch(`${this._baseUrl}/cards/cardId`, {
+  deleteCardData(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.message);
       })
       .catch((err) => {
         console.error(err);

@@ -1,9 +1,9 @@
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import "../pages/index.css";
-import Popup from "../components/Popup.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithConfirm from "../components/popupWithConfirm.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import {
@@ -33,16 +33,16 @@ const popupWithAddCardForm = new PopupWithForm(
   handleAddCardFormSubmit
 );
 
-const popupWithDeleteButton = new Popup(
-  {
-    popupSelector: "#delete-card-modal",
-  },
-  handleDeleteCardPopup
-);
-
 const popupWithImage = new PopupWithImage({
   popupSelector: "#preview-image-modal",
 });
+
+const popupWithDeleteButton = new PopupWithConfirm(
+  {
+    popupSelector: "#delete-card-modal",
+  },
+  handleDeleteCardConfirm
+);
 
 const userInfo = new UserInfo({
   nameElement: ".profile__title",
@@ -62,17 +62,30 @@ function renderCard(item, method = "addItem") {
 }
 
 function getCardElement(cardData) {
+  //console.log(cardData);
   const card = new Card(
     cardData,
-    popupWithDeleteButton,
     cardSelector,
-    handleImageClick
+    (card) => {
+      handleDeleteClick(card);
+    },
+    handleImageClick,
+    (card) => {
+      handleDeleteCard(card);
+    }
   );
   return card.getView();
 }
 
 function handleImageClick(data) {
+  console.log(data.name);
   popupWithImage.open({ name: data.name, link: data.link });
+}
+
+let selectedCardId;
+function handleDeleteClick(id) {
+  selectedCardId = id;
+  popupWithDeleteButton.open();
 }
 
 /*Event Handler*/
@@ -99,11 +112,8 @@ function handleAddCardFormSubmit(inputValue) {
   addFormValidator.disableSubmitButton();
 }
 
-function handleDeleteCardPopup(inputValue) {
-  const cardData = {
-    _id: inputValue.id,
-  };
-
+function handleDeleteCardConfirm() {
+  api.deleteCardData(selectedCardId);
   popupWithDeleteButton.close();
 }
 
