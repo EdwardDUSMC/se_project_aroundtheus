@@ -11,11 +11,15 @@ export default class PopupWithConfirm extends Popup {
     );
   }
 
+  setSubmitFunction(submitFuntion) {
+    this._submitFunction = submitFuntion;
+  }
+
   setEventListeners() {
     super.setEventListeners();
     this._popupForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      this._handleDeleteSubmit(this);
+      this._submitFunction(this);
     });
   }
 }

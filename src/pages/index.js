@@ -41,7 +41,7 @@ const popupWithDeleteButton = new PopupWithConfirm(
   {
     popupSelector: "#delete-card-modal",
   },
-  handleDeleteCardConfirm
+  openConfirmPopup
 );
 
 const userInfo = new UserInfo({
@@ -66,13 +66,11 @@ function getCardElement(cardData) {
   const card = new Card(
     cardData,
     cardSelector,
-    (card) => {
-      handleDeleteClick(card);
-    },
-    handleImageClick,
-    (card) => {
-      handleDeleteCard(card);
-    }
+    (cardInstance) => openConfirmPopup(cardInstance),
+    // (card) => {
+    //   handleDeleteClick(card);
+    // },
+    handleImageClick
   );
   return card.getView();
 }
@@ -82,11 +80,11 @@ function handleImageClick(data) {
   popupWithImage.open({ name: data.name, link: data.link });
 }
 
-let selectedCardId;
-function handleDeleteClick(id) {
-  selectedCardId = id;
-  popupWithDeleteButton.open();
-}
+// let selectedCardId;
+// function handleDeleteClick(id) {
+//   selectedCardId = id;
+//   popupWithDeleteButton.open();
+// }
 
 /*Event Handler*/
 
@@ -112,9 +110,29 @@ function handleAddCardFormSubmit(inputValue) {
   addFormValidator.disableSubmitButton();
 }
 
-function handleDeleteCardConfirm() {
-  api.deleteCardData(selectedCardId);
-  popupWithDeleteButton.close();
+// function handleDeleteCardConfirm() {
+//   api.deleteCardData(selectedCardId);
+//   popupWithDeleteButton.close();
+// }
+
+function openConfirmPopup(card) {
+  popupWithDeleteButton.setSubmitFunction(() => {
+    // this should be basically the handleDeleteCardConfirm logic
+    api
+      .deleteCardData(card._id)
+      .then(() => {
+        // use handleDeleteCard which removes the card from the DOM
+        card.handleDeleteCard(); //
+      })
+      .catch((err) => {
+        console.error("Failed to delete card: ", err);
+      })
+      .finally(() => {
+        popupWithDeleteButton.close();
+      });
+  });
+  // this is the part of the handleDeleteClick
+  popupWithDeleteButton.open();
 }
 
 addCardButton.addEventListener("click", () => {
