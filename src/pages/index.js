@@ -62,15 +62,12 @@ function renderCard(item, method = "addItem") {
 }
 
 function getCardElement(cardData) {
-  //console.log(cardData);
   const card = new Card(
     cardData,
     cardSelector,
     (cardInstance) => openConfirmPopup(cardInstance),
-    // (card) => {
-    //   handleDeleteClick(card);
-    // },
-    handleImageClick
+    handleImageClick,
+    handleLikeButton
   );
   return card.getView();
 }
@@ -80,11 +77,23 @@ function handleImageClick(data) {
   popupWithImage.open({ name: data.name, link: data.link });
 }
 
-// let selectedCardId;
-// function handleDeleteClick(id) {
-//   selectedCardId = id;
-//   popupWithDeleteButton.open();
-// }
+function handleLikeButton(cardId, likeButton) {
+  if (!cardId) return;
+
+  const isLiked = likeButton.classList.contains("card__like-button_active");
+
+  api
+    .toggleLike(cardId, isLiked)
+    .then((updatedCard) => {
+      if (updatedCard && "isLiked" in updatedCard) {
+        likeButton.classList.toggle(
+          "card__like-button_active",
+          updatedCard.isLiked
+        );
+      }
+    })
+    .catch((error) => console.error("Error updating like:", error));
+}
 
 /*Event Handler*/
 
@@ -109,11 +118,6 @@ function handleAddCardFormSubmit(inputValue) {
   addCardForm.reset();
   addFormValidator.disableSubmitButton();
 }
-
-// function handleDeleteCardConfirm() {
-//   api.deleteCardData(selectedCardId);
-//   popupWithDeleteButton.close();
-// }
 
 function openConfirmPopup(card) {
   popupWithDeleteButton.setSubmitFunction(() => {

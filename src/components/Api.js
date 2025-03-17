@@ -8,6 +8,19 @@ export default class Api {
 
   //user api
 
+  updateUserInfo(name, about) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        about: about,
+      }),
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
+    );
+  }
+
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
@@ -68,5 +81,18 @@ export default class Api {
       .catch((err) => {
         console.error(err);
       });
+  }
+
+  toggleLike(cardId, isLiked) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: isLiked ? "DELETE" : "PUT",
+      headers: this._headers,
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
+    );
+  }
+
+  getInitialData() {
+    return Promise.all([this.getUserInfo(), this.getCards()]);
   }
 }
