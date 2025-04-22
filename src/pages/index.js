@@ -19,6 +19,8 @@ import { config } from "../utils/constants.js";
 import Api from "../components/Api.js";
 
 // Linked classes
+console.log("Creating popupWithEditProfileForm...");
+
 const popupWithEditProfileForm = new PopupWithForm(
   {
     popupSelector: "#profile-edit-modal",
@@ -45,8 +47,8 @@ const popupWithDeleteButton = new PopupWithConfirm(
 );
 
 const userInfo = new UserInfo({
-  nameElement: ".profile__title",
-  jobElement: ".profile__description",
+  nameElement: ".profile__name",
+  jobElement: ".profile__about",
 });
 
 popupWithEditProfileForm.setEventListeners();
@@ -79,7 +81,6 @@ function handleImageClick(data) {
 
 function handleLikeButton(cardId, likeButton) {
   if (!cardId) return;
-
   const isLiked = likeButton.classList.contains("card__like-button_active");
 
   api
@@ -97,13 +98,20 @@ function handleLikeButton(cardId, likeButton) {
 
 /*Event Handler*/
 
-function handleProfileEditSubmit(inputValue) {
-  userInfo.setUserInfo({
-    name: inputValue.title,
-    description: inputValue.description,
-  });
-  popupWithEditProfileForm.close();
-  editFormValidator.disableSubmitButton();
+function handleProfileEditSubmit(event) {
+  const inputValues = popupWithEditProfileForm.getInputValues(); // Get form values
+
+  if (!inputValues.name || !inputValues.about) {
+    return;
+  }
+
+  api
+    .updateUserInfo(inputValues.name, inputValues.about)
+    .then((updatedUser) => {
+      userInfo.setUserInfo(updatedUser);
+      popupWithEditProfileForm.close();
+    })
+    .catch((err) => console.error("Profile update failed:", err));
 }
 
 function handleAddCardFormSubmit(inputValue) {
@@ -123,7 +131,7 @@ function openConfirmPopup(card) {
   popupWithDeleteButton.setSubmitFunction(() => {
     // this should be basically the handleDeleteCardConfirm logic
     api
-      .deleteCardData(card._id)
+      .deleteCardData(card._cardId)
       .then(() => {
         // use handleDeleteCard which removes the card from the DOM
         card.handleDeleteCard(); //
@@ -146,7 +154,7 @@ addCardButton.addEventListener("click", () => {
 profileEditButton.addEventListener("click", () => {
   const currentUserInfo = userInfo.getUserInfo();
   profileTitleInput.value = currentUserInfo.name;
-  profileDescriptionInput.value = currentUserInfo.description;
+  profileDescriptionInput.value = currentUserInfo.about;
   popupWithEditProfileForm.open();
 });
 
@@ -159,7 +167,12 @@ const api = new Api({
   },
 });
 
-api.getUserInfo();
+api
+  .getUserInfo()
+  .then((userData) => {
+    userInfo.setUserInfo(userData); // Display user info in UI
+  })
+  .catch((err) => console.error("Failed to load user info:", err));
 
 //card renderer api
 let cardArray = [];
