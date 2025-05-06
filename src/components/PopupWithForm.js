@@ -40,4 +40,14 @@ export default class PopupWithForm extends Popup {
       this._handleFormSubmit(this.getInputValues());
     });
   }
+
+  setLoadingText(isLoading, loadingText = "Saving...") {
+    const button = this._popupForm.querySelector("#submit-button");
+    if (isLoading) {
+      this._defaultButtonText = button.textContent;
+      button.textContent = loadingText;
+    } else {
+      button.textContent = this._defaultButtonText;
+    }
+  }
 }

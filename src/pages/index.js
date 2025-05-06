@@ -8,24 +8,33 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import {
   profileEditButton,
+  avatarUpdateButton,
   addCardButton,
   profileTitleInput,
   profileDescriptionInput,
+  avatarUrlInput,
   profileEditForm,
   addCardForm,
+  updateAvatarForm,
   cardSelector,
 } from "../utils/constants.js";
 import { config } from "../utils/constants.js";
 import Api from "../components/Api.js";
 
 // Linked classes
-console.log("Creating popupWithEditProfileForm...");
 
 const popupWithEditProfileForm = new PopupWithForm(
   {
     popupSelector: "#profile-edit-modal",
   },
   handleProfileEditSubmit
+);
+
+const popupWithEditAvatarForm = new PopupWithForm(
+  {
+    popupSelector: "#update-avatar-modal",
+  },
+  handleAvatarUpdateSubmit
 );
 
 const popupWithAddCardForm = new PopupWithForm(
@@ -49,12 +58,14 @@ const popupWithDeleteButton = new PopupWithConfirm(
 const userInfo = new UserInfo({
   nameElement: ".profile__name",
   jobElement: ".profile__about",
+  avatarElement: ".profile__avatar",
 });
 
 popupWithEditProfileForm.setEventListeners();
 popupWithAddCardForm.setEventListeners();
 popupWithImage.setEventListeners();
 popupWithDeleteButton.setEventListeners();
+popupWithEditAvatarForm.setEventListeners();
 
 /*Function*/
 
@@ -105,13 +116,39 @@ function handleProfileEditSubmit(event) {
     return;
   }
 
+  popupWithEditProfileForm.setLoadingText(true);
+
   api
     .updateUserInfo(inputValues.name, inputValues.about)
     .then((updatedUser) => {
       userInfo.setUserInfo(updatedUser);
       popupWithEditProfileForm.close();
     })
-    .catch((err) => console.error("Profile update failed:", err));
+    .catch((err) => console.error("Profile update failed:", err))
+    .finally(() => {
+      popupWithEditProfileForm.setLoadingText(false);
+    });
+}
+
+function handleAvatarUpdateSubmit(event) {
+  const inputvalues = popupWithEditAvatarForm.getInputValues(); // Get form values
+  const avatarUrl = inputvalues.avatar;
+
+  if (!avatarUrl) {
+    return;
+  }
+
+  popupWithEditAvatarForm.setLoadingText(true);
+  api
+    .updateProfileAvatar(avatarUrl)
+    .then((res) => {
+      userInfo.setUserAvatar(res.avatar);
+      popupWithEditAvatarForm.close();
+    })
+    .catch((err) => console.error("Profile update failed:", err))
+    .finally(() => {
+      popupWithEditAvatarForm.setLoadingText(false);
+    });
 }
 
 function handleAddCardFormSubmit(inputValue) {
@@ -119,9 +156,16 @@ function handleAddCardFormSubmit(inputValue) {
     name: inputValue.title,
     link: inputValue.url,
   };
-  api.addNewCard(cardData).then((newCard) => {
-    renderCard(newCard);
-  });
+
+  popupWithAddCardForm.setLoadingText(true);
+  api
+    .addNewCard(cardData)
+    .then((newCard) => {
+      renderCard(newCard);
+    })
+    .finally(() => {
+      popupWithAddCardForm.setLoadingText(false);
+    });
   popupWithAddCardForm.close();
   addCardForm.reset();
   addFormValidator.disableSubmitButton();
@@ -156,6 +200,11 @@ profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = currentUserInfo.name;
   profileDescriptionInput.value = currentUserInfo.about;
   popupWithEditProfileForm.open();
+});
+avatarUpdateButton.addEventListener("click", () => {
+  const currentUserInfo = userInfo.getUserInfo();
+  avatarUrlInput.value = currentUserInfo.avatar;
+  popupWithEditAvatarForm.open();
 });
 
 //api
@@ -195,5 +244,7 @@ const section = new Section(
 //validator
 const editFormValidator = new FormValidator(config, profileEditForm);
 const addFormValidator = new FormValidator(config, addCardForm);
+const updateFormValidator = new FormValidator(config, updateAvatarForm);
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
+updateFormValidator.enableValidation();
