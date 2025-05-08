@@ -149,6 +149,8 @@ function handleAvatarUpdateSubmit(event) {
     .finally(() => {
       popupWithEditAvatarForm.setLoadingText(false);
     });
+
+  updateFormValidator.disableSubmitButton();
 }
 
 function handleAddCardFormSubmit(inputValue) {
@@ -162,6 +164,9 @@ function handleAddCardFormSubmit(inputValue) {
     .addNewCard(cardData)
     .then((newCard) => {
       renderCard(newCard);
+    })
+    .catch((err) => {
+      console.error("Failed to add card: ", err);
     })
     .finally(() => {
       popupWithAddCardForm.setLoadingText(false);
@@ -219,23 +224,22 @@ const api = new Api({
 api
   .getUserInfo()
   .then((userData) => {
-    userInfo.setUserInfo(userData); // Display user info in UI
+    userInfo.setUserInfo(userData);
+    userInfo.setUserAvatar(userData); // Display user info in UI
   })
   .catch((err) => console.error("Failed to load user info:", err));
 
 //card renderer api
-let cardArray = [];
 
-let data = api.getCardData();
-data.then((data) => {
-  cardArray = data;
-  console.log(cardArray);
-  cardArray.forEach((cardData) => renderCard(cardData));
-});
+api
+  .getCardData()
+  .then((data) => {
+    data.forEach((cardData) => renderCard(cardData));
+  })
+  .catch(console.error);
 
 const section = new Section(
   {
-    items: cardArray,
     renderer: renderCard,
   },
   ".cards__list"
