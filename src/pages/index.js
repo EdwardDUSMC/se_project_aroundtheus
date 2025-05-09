@@ -75,36 +75,19 @@ function renderCard(item, method = "addItem") {
 }
 
 function getCardElement(cardData) {
-  const card = new Card(
+  const card = new Card({
     cardData,
     cardSelector,
-    (cardInstance) => openConfirmPopup(cardInstance),
+    handleDeleteClick: (cardInstance) => openConfirmPopup(cardInstance),
     handleImageClick,
-    handleLikeButton
-  );
+    api,
+  });
   return card.getView();
 }
 
 function handleImageClick(data) {
   console.log(data.name);
   popupWithImage.open({ name: data.name, link: data.link });
-}
-
-function handleLikeButton(cardId, likeButton) {
-  if (!cardId) return;
-  const isLiked = likeButton.classList.contains("card__like-button_active");
-
-  api
-    .toggleLike(cardId, isLiked)
-    .then((updatedCard) => {
-      if (updatedCard && "isLiked" in updatedCard) {
-        likeButton.classList.toggle(
-          "card__like-button_active",
-          updatedCard.isLiked
-        );
-      }
-    })
-    .catch((error) => console.error("Error updating like:", error));
 }
 
 /*Event Handler*/
@@ -164,6 +147,9 @@ function handleAddCardFormSubmit(inputValue) {
     .addNewCard(cardData)
     .then((newCard) => {
       renderCard(newCard);
+      popupWithAddCardForm.close();
+      addCardForm.reset();
+      addFormValidator.disableSubmitButton();
     })
     .catch((err) => {
       console.error("Failed to add card: ", err);
@@ -171,9 +157,6 @@ function handleAddCardFormSubmit(inputValue) {
     .finally(() => {
       popupWithAddCardForm.setLoadingText(false);
     });
-  popupWithAddCardForm.close();
-  addCardForm.reset();
-  addFormValidator.disableSubmitButton();
 }
 
 function openConfirmPopup(card) {
@@ -183,13 +166,11 @@ function openConfirmPopup(card) {
       .deleteCardData(card._cardId)
       .then(() => {
         // use handleDeleteCard which removes the card from the DOM
-        card.handleDeleteCard(); //
+        card.handleDeleteCard();
+        popupWithDeleteButton.close(); //
       })
       .catch((err) => {
         console.error("Failed to delete card: ", err);
-      })
-      .finally(() => {
-        popupWithDeleteButton.close();
       });
   });
   // this is the part of the handleDeleteClick
