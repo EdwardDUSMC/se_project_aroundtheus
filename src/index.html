@@ -17,7 +17,11 @@
       <main class="content">
         <section class="profile page__section">
           <div class="profile-picture">
-            <img src="" alt="avatar" class="profile__avatar" />
+            <img
+              src="<%=require('./images/default-profilePic.png')%>"
+              alt="avatar"
+              class="profile__avatar"
+            />
             <button
               class="avatar__update-button"
               id="avatar-update-button"
@@ -140,6 +144,7 @@
             required
           />
           <span class="modal__error" id="avatar-url-input-error"></span>
+          <span class="modal__error"></span>
           <button
             class="modal__button modal__button_disabled"
             id="submit-button"

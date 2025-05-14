@@ -32,11 +32,7 @@ export default class Api {
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    })
-      .then(this._checkResponse)
-      .catch((err) => {
-        console.error(err);
-      });
+    }).then(this._checkResponse);
   }
 
   //card api
@@ -44,11 +40,7 @@ export default class Api {
   getCardData() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
-    })
-      .then(this._checkResponse)
-      .catch((err) => {
-        console.error(err);
-      });
+    }).then(this._checkResponse);
   }
 
   addNewCard(newCard) {
@@ -56,24 +48,13 @@ export default class Api {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify(newCard),
-    })
-      .then(this._checkResponse)
-      .catch((err) => {
-        console.error(err);
-      });
+    }).then(this._checkResponse);
   }
   deleteCardData(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data.message);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    }).then(this._checkResponse);
   }
 
   toggleLike(cardId, isLiked) {

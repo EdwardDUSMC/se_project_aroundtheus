@@ -106,6 +106,7 @@ function handleProfileEditSubmit(event) {
     .then((updatedUser) => {
       userInfo.setUserInfo(updatedUser);
       popupWithEditProfileForm.close();
+      editFormValidator.disableSubmitButton();
     })
     .catch((err) => console.error("Profile update failed:", err))
     .finally(() => {
@@ -115,11 +116,13 @@ function handleProfileEditSubmit(event) {
 
 function handleAvatarUpdateSubmit(event) {
   const inputvalues = popupWithEditAvatarForm.getInputValues(); // Get form values
+  console.log(inputvalues);
   const avatarUrl = inputvalues.avatar;
 
   if (!avatarUrl) {
     return;
   }
+  console.log("Received avatar URL:", avatarUrl);
 
   popupWithEditAvatarForm.setLoadingText(true);
   api
@@ -127,13 +130,12 @@ function handleAvatarUpdateSubmit(event) {
     .then((res) => {
       userInfo.setUserAvatar(res.avatar);
       popupWithEditAvatarForm.close();
+      updateFormValidator.disableSubmitButton();
     })
     .catch((err) => console.error("Profile update failed:", err))
     .finally(() => {
       popupWithEditAvatarForm.setLoadingText(false);
     });
-
-  updateFormValidator.disableSubmitButton();
 }
 
 function handleAddCardFormSubmit(inputValue) {
