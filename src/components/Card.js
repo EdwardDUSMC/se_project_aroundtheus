@@ -1,21 +1,35 @@
 export default class Card {
-  constructor({ name, link }, cardSelector, handleImageClick) {
-    this._name = name;
-    this._link = link;
+  constructor({
+    cardData,
+    cardSelector,
+    handleDeleteClick,
+    handleImageClick,
+    api,
+  }) {
+    this._name = cardData.name;
+    this._link = cardData.link;
+    this._cardId = cardData._id;
+    this._api = api;
     this._cardSelector = cardSelector;
+    this._handleDeleteClick = handleDeleteClick;
     this._handleImageClick = handleImageClick;
+    this._isLiked = cardData.isLiked;
   }
 
   _setEventListeners() {
-    this._cardElement
-      .querySelector(".card__like-button")
-      .addEventListener("click", () => {
-        this._handleLikeButton();
-      });
+    this._likeButton.classList.toggle(
+      "card__like-button_active",
+      this._isLiked
+    );
+
+    this._likeButton.addEventListener("click", () => {
+      this.toggleLike(this._api);
+    });
+
     this._cardElement
       .querySelector(".card__delete-button")
       .addEventListener("click", () => {
-        this._handleDeleteCard();
+        this._handleDeleteClick(this);
       });
     this._cardElement
       .querySelector(".card__image")
@@ -24,14 +38,26 @@ export default class Card {
       });
   }
 
-  _handleDeleteCard() {
+  handleDeleteCard() {
     this._cardElement.remove();
   }
 
-  _handleLikeButton() {
-      this._cardElement
-      .querySelector('.card__like-button')
-      .classList.toggle("card__like-button_active");
+  toggleLike(api) {
+    const isLiked = this._likeButton.classList.contains(
+      "card__like-button_active"
+    );
+
+    api
+      .toggleLike(this._cardId, isLiked)
+      .then((updatedCard) => {
+        if (updatedCard && "isLiked" in updatedCard) {
+          this._likeButton.classList.toggle(
+            "card__like-button_active",
+            updatedCard.isLiked
+          );
+        }
+      })
+      .catch((err) => console.error("Error toggling like:", err));
   }
 
   getView() {
@@ -41,6 +67,7 @@ export default class Card {
       .cloneNode(true);
     const cardImageEl = this._cardElement.querySelector(".card__image");
     const cardTitleEl = this._cardElement.querySelector(".card__title");
+    this._likeButton = this._cardElement.querySelector(".card__like-button");
     cardImageEl.src = this._link;
     cardImageEl.alt = this._name;
     cardTitleEl.textContent = this._name;
